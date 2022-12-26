@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +36,17 @@ public class StudentController {
 	@DeleteMapping("delete/{id}")
 	public String deleteStudent(@PathVariable int id) {
 		return studentdao.deleteStudent(id);
+	}
+	
+	
+	@PutMapping("update")
+	public Student updateStudent(@RequestBody Student student,@RequestParam  int id) {
+		Student student2 = studentdao.getStudent(id);
+		
+		if(student2!=null) {
+			student.setId(id);
+			return studentdao.saveStudent(student);
+		}
+		return null;
 	}
 }
